@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    position: fixed;
+    inset: 3cm;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: rgb(188, 170, 170);
+    color: white;
+    border-radius: 20px;
+}
+
+.homeContainer h1:hover {
+    color: rgb(182, 141, 141);
+}
+
+.hero {
+    height: 100vh;
+    width: 100%;
+    background-image: url("/background.jpg");
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: flex-end; /* horizontalno desno */
+    align-items: center;       /* vertikalno centar */
+    padding-right: 10%;        /* pomeri od ruba ekrana u sredinu desne strane */
+}
+
+.hero h2 {
+    text-align: center;
+    color: white;
+    max-width: 400px;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    h2 {
+        grid-column: 1;
+        grid-row: 1;
+
+        text-align: center;
+        padding: 20px;
+
+    }
+}
+
+.link:hover {
+    color: rgb(75, 75, 75);
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}

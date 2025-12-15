@@ -1,0 +1,46 @@
+"use client"
+import React, { useRef, useState } from 'react';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+
+import styles from './swiper.module.css';
+
+// import required modules
+import { EffectCoverflow, Pagination } from 'swiper/modules';
+
+export default function SwiperComponent({ openings }) {
+    return (
+        <>
+            <Swiper
+                effect={'coverflow'}
+                grabCursor={true}
+                centeredSlides={true}
+                slidesPerView={'auto'}
+                coverflowEffect={{
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                }}
+                pagination={true}
+                modules={[EffectCoverflow, Pagination]}
+                className={styles.swiper}
+            >
+                {openings.map(o => (
+                    <SwiperSlide className={styles.swiperSlide} key={o.src}>
+                        <img src={o.src} />
+                        <h3>{o.name}</h3>
+                    </SwiperSlide>
+                ))}
+
+
+            </Swiper>
+        </>
+    );
+}
