@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 export default function NavBar() {
     const pathName = usePathname();
     return (
-        <nav className={`navbar navbar-dark navbar-expand-md ${styles.bgBrown}`}>
+        <nav className={`navbar navbar-dark navbar-expand-md fixed-top ${styles.navBar}`}>
             <div className="container-fluid navContainer" >
                 <Link href="/" className={`navbar-brand ${styles.navContainer}`}>
                     <img src="/icon.png" alt="Logo" width="50" height="50" className="d-inline-block align-text-top" />
@@ -19,13 +19,13 @@ export default function NavBar() {
             <div className='collapse navbar-collapse' id="navbarNav">
                 <ul className={`navbar-nav ${styles.navBarItem}`}>
                     <li className="nav-link">
-                        <Link className={`nav-link ${pathName==='/blogs' ? styles.linkActive : ""}`} aria-current="page" href="/blogs"><h3>Blogs</h3></Link>
+                        <Link className={`nav-link ${pathName==='/home' ? styles.linkActive : ""}`} aria-current="page" href="/home"><h3>Home</h3></Link>
                     </li>
                     <li className="nav-link">
-                        <Link className={`nav-link ${pathName==='/players' ? styles.linkActive : ""}`} aria-current="page" href="/players"><h3>Players</h3></Link>
+                        <Link className={`nav-link ${pathName==='/blog' ? styles.linkActive : ""}`} aria-current="page" href="/blog"><h3>Blog</h3></Link>
                     </li>
                     <li className="nav-link">
-                        <Link className={`nav-link ${pathName==='/login' ? styles.linkActive : ""}`} aria-current="page" href="/login"><h3>Login</h3></Link>
+                        <Link className={`nav-link ${pathName==='/openings' ? styles.linkActive : ""}`} aria-current="page" href="/openings"><h3>Openings</h3></Link>
                     </li>
                 </ul>
             </div>

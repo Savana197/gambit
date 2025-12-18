@@ -1,0 +1,11 @@
+.blogs {
+  display: flex;           /* leve i desne kolone u redu */
+  gap: 20px;
+}
+
+.cardTitle {
+    margin: 0%;
+}
+.cardLink {
+    text-decoration: none;
+}

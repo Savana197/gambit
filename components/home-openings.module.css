@@ -1,0 +1,37 @@
+.openingContainer {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 3vw, 30px);
+}
+
+/* RED koji drži h2 i dugme */
+.headerRow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    padding-top: 1%;
+}
+
+/* NASLOV U SREDINI */
+.headerRow h2 {
+    grid-column: 2;
+    text-align: center;
+    margin: 0;
+}
+
+/* DUGME DESNO */
+.learnMore {
+    grid-column: 3;
+    justify-self: end;
+    padding: 8px 16px;
+}
+
+.learnMore button {
+
+
+    border-radius: 999px;
+    border: 1px solid black;
+    padding: 8px 16px;
+    background: transparent;
+}

@@ -10,7 +10,7 @@ export default function Home() {
         <i>-Mikhail Tal</i>
         <br />
         <br />
-        <Link className="link" href="/blogs">Dive into the forest</Link>
+        <Link className="link" href="/home">Dive into the forest</Link>
         </h2>
        
     </div>
