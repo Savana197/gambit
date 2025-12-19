@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import './globals.css'
-import BootstrapClient from '@/components/bootstrap';
+import BootstrapClient from '../components/bootstrap';
 
 
 export default function RootLayout({ children }) {

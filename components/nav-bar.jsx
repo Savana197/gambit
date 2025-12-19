@@ -22,7 +22,7 @@ export default function NavBar() {
                         <Link className={`nav-link ${pathName==='/home' ? styles.linkActive : ""}`} aria-current="page" href="/home"><h3>Home</h3></Link>
                     </li>
                     <li className="nav-link">
-                        <Link className={`nav-link ${pathName==='/blog' ? styles.linkActive : ""}`} aria-current="page" href="/blog"><h3>Blog</h3></Link>
+                        <Link className={`nav-link ${pathName==='/news' ? styles.linkActive : ""}`} aria-current="page" href="/news"><h3>News</h3></Link>
                     </li>
                     <li className="nav-link">
                         <Link className={`nav-link ${pathName==='/openings' ? styles.linkActive : ""}`} aria-current="page" href="/openings"><h3>Openings</h3></Link>

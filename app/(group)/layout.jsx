@@ -1,10 +1,13 @@
 import NavBar from "@/components/nav-bar";
+import classes from './group.module.css'
 
 export default function NavLayout({children}){
     return (
         <>
         <NavBar></NavBar>
-        {children}
+        <div className={classes.groupBody}>
+            {children}
+        </div>
         </>
     )
 }
