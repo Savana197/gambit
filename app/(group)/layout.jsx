@@ -5,9 +5,9 @@ export default function NavLayout({children}){
     return (
         <>
         <NavBar></NavBar>
-        <div className={classes.groupBody}>
+        <main style={{paddingTop:'10%'}}>
             {children}
-        </div>
+        </main>
         </>
     )
 }

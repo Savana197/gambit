@@ -8,11 +8,6 @@ export default function PostNews() {
     return (
         <form className="p-5" action={formAction}>
             <div className="mb-3">
-                <label htmlFor="newsID" className="form-label">Id</label>
-                <input type="text" className="form-control" id="id" name="id" />
-
-            </div>
-            <div className="mb-3">
                 <label htmlFor="title" className="form-label">Title</label>
                 <input type="text" className="form-control" id="title" name="title" />
 
@@ -24,10 +19,6 @@ export default function PostNews() {
             <div className="mb-3">
                 <label htmlFor="image" className="form-label">Choose Image</label>
                  <input type="file" accept="image/*" className="form-control" id="image" name="image" />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="authorId" className="form-label">Author Id</label>
-                <input type="text" className="form-control" id="authorId" name="authorId"/>
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
             {state.message && <p>{state.message}</p>}

@@ -1,4 +1,5 @@
-import BlogModule from "@/components/home-blog";
+import HomeNews from "@/components/home-news";
+import NewsNews from "@/components/news-news";
 import Link from "next/link";
 
 export default function () {
@@ -6,7 +7,8 @@ export default function () {
         <div className="container p-5">
             
             <Link href="/news/post" className=""><b>Add News</b></Link>
-            <BlogModule></BlogModule>
+            <NewsNews></NewsNews>
+            <NewsNews></NewsNews>
         
         </div>
     )

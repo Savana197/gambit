@@ -1,17 +1,14 @@
-
-import prisma from '@/lib/prisma';
+import pool from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
+    const {title,content,imageURL} = await request.json();
     try {
-        const body = await request.json();
-        const news = await prisma.post.create({
-            data: {
-                content: body.content,
-                title: body.title,
-            }
-        });
-        return NextResponse.json(news, { status: 201 });
+        const result = await pool.query(
+      'INSERT INTO "Post" (title, content, image) VALUES ($1, $2, $3) RETURNING *',
+      [title, content, imageURL]
+    );
+        return NextResponse.json(result, { status: 201 });
     } catch (error) {
         console.error(error);
         return NextResponse.json(

@@ -1,0 +1,32 @@
+.blogs {
+  display: flex;           /* leve i desne kolone u redu */
+  gap: 20px;
+}
+
+.cardTitle {
+    margin: 0%;
+}
+.cardLink {
+    text-decoration: none;
+}
+.learnMore {
+    grid-column: 3;
+    justify-self: end;
+    padding: 8px 16px;
+}
+
+.learnMore button {
+
+
+    border-radius: 999px;
+    border: 1px solid black;
+    padding: 8px 16px;
+    background: transparent;
+}
+.headerRow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    padding-top: 1%;
+}
