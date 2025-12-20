@@ -8,8 +8,6 @@ export default function () {
             
             <Link href="/news/post" className=""><b>Add News</b></Link>
             <NewsNews></NewsNews>
-            <NewsNews></NewsNews>
-        
         </div>
     )
 }

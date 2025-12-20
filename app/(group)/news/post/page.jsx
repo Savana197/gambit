@@ -1,5 +1,5 @@
 'use client'
-import postNews from "@/lib/actions"
+import { postNews } from "@/lib/actions"
 import { useActionState } from "react"
 
 
