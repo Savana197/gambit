@@ -21,7 +21,7 @@ export default async function HomeNews() {
             <div className="row row-cols-1 row-cols-md-3 g-4">
                 {
                     news.map(post => (
-                        <Link className={styles.cardLink} key={post.id} href="/">
+                        <Link className={styles.cardLink} key={post.id} href={`/news/${post.id}`}>
                             <div className="col">
                                 <div className="card h-100">
                                     <img src={post.image} className="card-img-top" alt={post.title} />
@@ -30,7 +30,7 @@ export default async function HomeNews() {
 
                                     </div>
                                     <div className="card-footer">
-                                        <small className="text-body-secondary">Created by Savo {timeAgo(post.createdAt)}</small>
+                                        <small className="text-body-secondary">Created by Savo {timeAgo(post.createdat)}</small>
                                     </div>
                                 </div>
                             </div>
