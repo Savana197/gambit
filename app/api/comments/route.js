@@ -1,0 +1,27 @@
+import pool from "@/lib/db";
+import { NextResponse } from "next/server";
+
+export async function POST(request){
+    const {content, postId} = await request.json();
+    const query = 'INSERT INTO "Comment" (content, postid, userid) VALUES ($1, $2, $3) RETURNING *';
+    try {
+        const result = await pool.query(query, [content, postId, 1]);
+        return NextResponse.json(result, {status: 201})
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({message: 'Error creating news'}, {status: 500})
+    }
+}
+
+export async function GET(request){
+    const {searchParams} = new URL(request.url);
+    const id = Number(searchParams.get("id"));
+    const query = `SELECT c.*, u.username FROM "Comment" c JOIN "User" u ON u.id=c.userid WHERE "postid"=$1 ORDER BY c.createdat DESC`
+    try {
+        const result = await pool.query(query, [id]);
+        return NextResponse.json(result.rows, {status:200})
+    } catch (error) {
+        console.error("Failed fetching news");
+        return NextResponse.json({message: "Failed fetching news"}, {status:500})
+    }
+}

@@ -1,3 +1,5 @@
+import CommentForm from "@/components/comment-form";
+import Comments from "@/components/comments";
 import { getNewsById } from "@/lib/news";
 import { timeAgo } from "@/lib/utils/date";
 
@@ -9,7 +11,8 @@ export default async function NewsDetailsPage({ params }) {
     const post = news[0]
     return (
         <div className="container my-5">
-            <div className="card shadow-sm">
+            <div className="row">
+                <div className="col-12 col-lg-8 card shadow-sm">
                 <img className="card-img-top" src={post.image} alt={post.title} />
 
                 <div className="card-body">
@@ -23,6 +26,11 @@ export default async function NewsDetailsPage({ params }) {
                        {post.content}
                     </p>
                 </div>
+            </div>
+            <div className="col-12 col-lg-4 d-flex flex-column gap-3">
+                <Comments postId={id}></Comments>
+                <CommentForm postId={id}></CommentForm>
+            </div>
             </div>
         </div>
     )
