@@ -1,3 +1,7 @@
+import Opening from "@/components/opening";
+
 export default function(){
-    return null
+    return (
+        <Opening></Opening>
+    )
 }

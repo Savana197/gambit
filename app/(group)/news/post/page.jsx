@@ -20,8 +20,9 @@ export default function PostNews() {
                 <label htmlFor="image" className="form-label">Choose Image</label>
                  <input type="file" accept="image/*" className="form-control" id="image" name="image" />
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-            {state.message && <p>{state.message}</p>}
+            <button type="submit" className="btn btn-secondary">Submit</button>
+             {state.message && <p>{state.message}</p>}
         </form>
+       
     )
 }

@@ -6,7 +6,7 @@ export default function () {
     return (
         <div className="container p-5">
             
-            <Link href="/news/post" className=""><b>Add News</b></Link>
+            {/* <Link href="/news/post" className=""><b>Add News</b></Link> */}
             <NewsNews></NewsNews>
         </div>
     )
