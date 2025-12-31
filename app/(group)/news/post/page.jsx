@@ -4,7 +4,7 @@ import { useActionState } from "react"
 
 
 export default function PostNews() {
-    const [state, formAction] = useActionState(postNews, {message:null})
+    const [state, formAction, pending] = useActionState(postNews, {message:null})
     return (
         <form className="p-5" action={formAction}>
             <div className="mb-3">
@@ -20,7 +20,7 @@ export default function PostNews() {
                 <label htmlFor="image" className="form-label">Choose Image</label>
                  <input type="file" accept="image/*" className="form-control" id="image" name="image" />
             </div>
-            <button type="submit" className="btn btn-secondary">Submit</button>
+            <button disabled={pending} type="submit" className="btn btn-secondary">{pending ? 'Submitting...' : 'Submit'}</button>
              {state.message && <p>{state.message}</p>}
         </form>
        

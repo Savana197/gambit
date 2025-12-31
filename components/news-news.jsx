@@ -7,6 +7,7 @@ export default async function NewsNews() {
     const news = await getNews();
     return (
         <>
+            <Link href="/news/post"><h3>Post news</h3></Link>
             {news.map(item => (
                 <Link href={`/news/${item.id}`} className={classes.link} key={item.id}>
                     <div className="card mb-3 mt-3" style={{ maxWidth: "1080px" }}  >
