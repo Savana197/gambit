@@ -2,11 +2,11 @@ import pool from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-    const {title,content,imageURL} = await request.json();
+    const {title,content,imageURL,authorId} = await request.json();
     try {
         const result = await pool.query(
       'INSERT INTO "Post" (title, content, image, authorid) VALUES ($1, $2, $3, $4) RETURNING *',
-      [title, content, imageURL, 1]
+      [title, content, imageURL, authorId]
     );
         return NextResponse.json(result, { status: 201 });
     } catch (error) {
@@ -21,7 +21,7 @@ export async function GET(request){
     const {searchParams} = new URL(request.url);
     const id = Number(searchParams.get('id'));
     const limit = searchParams.get('limit')
-    let query = 'SELECT * FROM "Post" ORDER BY "createdat" DESC'
+    let query = 'SELECT p.*, u.username FROM "Post" p JOIN "User" u ON p.authorid=u.id ORDER BY "createdat" DESC'
     if(limit){
         query += ` LIMIT ${Number(limit)}`
     }

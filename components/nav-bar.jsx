@@ -1,14 +1,31 @@
 "use client"
 import Link from "next/link"
 import styles from "./nav-bar.module.css"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams, useRouter } from "next/navigation"
 import { useActionState, useEffect, useState } from "react";
 import { login, logout, register } from "@/lib/actions";
 
-export default function NavBar() {
+
+export default function NavBar({ user }) {
     const pathName = usePathname();
 
-    const [user, setUser] = useState(null)
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    useEffect(() => {
+        if (searchParams.get("login") === "true") {
+            const modalEl = document.getElementById("loginModal");
+            if (!modalEl) return;
+
+            const bs = window?.bootstrap;
+            if (bs?.Modal) {
+                const modal = new bs.Modal(modalEl);
+                modal.show();
+
+                router.replace("/home");
+            }
+        }
+    }, [searchParams]);
+
     const [loginState, loginAction] = useActionState(login, { message: '' })
     const [registerState, registerAction] = useActionState(register, undefined)
 
@@ -32,8 +49,8 @@ export default function NavBar() {
     }
     useEffect(() => {
         if (registerState && !registerState.errors || (loginState && !loginState.errors && loginState.success)) {
-            setUser(true);
             hideModal();
+            router.refresh();
 
         }
     }, [registerState, loginState])
@@ -69,14 +86,15 @@ export default function NavBar() {
                         </li>
                         <li className="nav-item">
                             {user ? (
-                                <form action={logout}>
                                 <button
-                                    type="submit"
+                                    onClick={async () => {
+                                        await logout();
+                                        router.refresh();
+                                    }}
                                     className="nav-link btn btn-link"
                                 >
                                     <h3>Logout</h3>
                                 </button>
-                                </form>
                             ) : (
                                 <a
                                     className={`nav-link`}

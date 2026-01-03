@@ -16,7 +16,7 @@ export async function POST(request){
 export async function GET(request){
     const {searchParams} = new URL(request.url)
     const limit = Number(searchParams.get('limit'))
-    let query = 'SELECT o.*, u.username FROM "Opening" o JOIN "User" u ON u.id=o.authorid'
+    let query = 'SELECT o.*, u.username FROM "Opening" o LEFT JOIN "User" u ON u.id=o.authorid'
     if(limit){
         query+= ` LIMIT ${limit}`
     }

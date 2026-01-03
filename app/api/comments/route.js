@@ -2,14 +2,25 @@ import pool from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request){
-    const {content, postId} = await request.json();
+    const body = await request.json();
+    const content = body?.content;
+    const newsId = Number(body?.newsId)
+    const userId = Number(body?.userId)
+    
+    
+    
+
+    if (!content || !newsId || !userId) {
+        return NextResponse.json({ message: 'Missing required fields' }, { status: 400 })
+    }
+
     const query = 'INSERT INTO "Comment" (content, postid, userid) VALUES ($1, $2, $3) RETURNING *';
     try {
-        const result = await pool.query(query, [content, postId, 1]);
-        return NextResponse.json(result, {status: 201})
+        const result = await pool.query(query, [content, newsId, userId]);
+        return NextResponse.json(result.rows[0], { status: 201 })
     } catch (error) {
-        console.error(error);
-        return NextResponse.json({message: 'Error creating news'}, {status: 500})
+        console.error('Error inserting comment:', error?.message || error);
+        return NextResponse.json({ message: error?.message || 'Error creating comment' }, { status: 500 })
     }
 }
 

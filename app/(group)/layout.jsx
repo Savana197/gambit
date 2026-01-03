@@ -1,10 +1,14 @@
 import NavBar from "@/components/nav-bar";
-import classes from './group.module.css'
 
-export default function NavLayout({children}){
+import { getUserFromCookie } from "@/lib/auth";
+
+
+
+export default async function NavLayout({children}){
+    const user = await getUserFromCookie()
     return (
         <>
-        <NavBar></NavBar>
+        <NavBar user={user}></NavBar>
         <main style={{paddingTop:'10%'}}>
             {children}
         </main>

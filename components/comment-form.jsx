@@ -1,26 +1,10 @@
 'use client'
-import { useState } from "react";
+import { comment } from "@/lib/actions";
+import { useActionState } from "react";
 
 export default function CommentForm({ postId }) {
-    const [content, setContent] = useState('');
-    const [loading, setLoading] = useState(false);
-    async function submitComment(e) {
-        e.preventDefault();
-        setLoading(true);
+    const [commentState, commentAction, pending] = useActionState(comment, { message: '' })
 
-        await fetch("http://localhost:3000/api/comments", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                content,
-                postId
-            })
-        });
-
-        setLoading(false)
-        setContent('')
-        location.reload();
-    }
     return (
         <div className="card shadow-sm">
             <div className="card-header">
@@ -28,20 +12,22 @@ export default function CommentForm({ postId }) {
             </div>
 
             <div className="card-body">
-                <form onSubmit={submitComment}>
+                <form action={commentAction}>
                     <div className="mb-3">
                         <textarea
+                            name="comment"
                             className="form-control"
                             rows="3"
                             placeholder="Write your comment..."
-                            onChange={e => setContent(e.target.value)}
                             required
                         />
                     </div>
+                    <input type="hidden" name="newsId" value={postId} />
 
-                    <button className="btn btn-secondary w-100" disabled={loading}>
-                        Post comment
+                    <button className="btn btn-secondary w-100" disabled={pending}>
+                        {pending ? 'Posting...' : 'Post comment'}
                     </button>
+                    {commentState?.message && <p className="text-danger">{commentState.message}</p>}
                 </form>
             </div>
         </div>
