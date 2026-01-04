@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import classes from './opening.module.css'
 import OpeningModal from './openings-modal'
 import { getOpenings } from '@/lib/openings'

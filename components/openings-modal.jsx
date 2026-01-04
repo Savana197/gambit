@@ -1,11 +1,14 @@
 'use client'
 import { addOpening } from "@/lib/actions"
-import { useRouter } from "next/navigation"
-import { useActionState, useEffect } from "react"
+import { verifySession } from "@/lib/auth"
+import { fetchUserWithId } from "@/lib/users"
+
+import { useActionState, useEffect, useState } from "react"
 
 export default function OpeningModal() {
     // const router = useRouter();
-    const [state, formAction] = useActionState(addOpening, {message: '', success:false})
+    const [state, formAction] = useActionState(addOpening, { message: '', success: false })
+    const [user, setUser] = useState(null)
     // useEffect(() => {
     //     if(!state.success) return;
     //     const modalEl = document.getElementById("modal");
@@ -14,11 +17,20 @@ export default function OpeningModal() {
     //     modal.dispose()
     //     router.refresh()
     // },[state.success])
+    useEffect(() => {
+        async function getUser() {
+            const { userId } = await verifySession()
+            const user = await fetchUserWithId(userId)
+            setUser(user)
+        }
+        getUser()
+    }, [])
     return (
         <>
-            <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal">
+            {user?.role==="admin" && <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal">
                 Add Opening
-            </button>
+            </button>}
+
             <div className="modal fade" id="modal" tabIndex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -30,7 +42,7 @@ export default function OpeningModal() {
                             <form className="p-5" action={formAction}>
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">Opening name</label>
-                                    <input type="text" className="form-control" id="opening" name="opening" required/>
+                                    <input type="text" className="form-control" id="opening" name="opening" required />
 
                                 </div>
                                 <div className="input-group">
@@ -50,7 +62,7 @@ export default function OpeningModal() {
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </>
     )

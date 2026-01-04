@@ -4,13 +4,26 @@ import styles from "./nav-bar.module.css"
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
 import { useActionState, useEffect, useState } from "react";
 import { login, logout, register } from "@/lib/actions";
+import {  fetchUserWithId } from "@/lib/users";
 
 
-export default function NavBar({ user }) {
+export default function NavBar({ userId }) {
+    const [loginState, loginAction] = useActionState(login, { message: '' })
+    const [registerState, registerAction] = useActionState(register, undefined)
+
+    const [state, setState] = useState('login');
+    const [wholeUser, setWholeUser] = useState(null);
     const pathName = usePathname();
 
     const searchParams = useSearchParams();
     const router = useRouter();
+    useEffect(() => {
+        async function getUser(){
+            const data = await fetchUserWithId(userId)
+            setWholeUser(data);
+        }
+        getUser()
+    }, [userId]);
     useEffect(() => {
         if (searchParams.get("login") === "true") {
             const modalEl = document.getElementById("loginModal");
@@ -26,10 +39,7 @@ export default function NavBar({ user }) {
         }
     }, [searchParams]);
 
-    const [loginState, loginAction] = useActionState(login, { message: '' })
-    const [registerState, registerAction] = useActionState(register, undefined)
-
-    const [state, setState] = useState('login');
+    
 
     function hideModal() {
         const modalEl = document.getElementById("loginModal");
@@ -48,12 +58,20 @@ export default function NavBar({ user }) {
         // backdrops.forEach(b => b.remove());
     }
     useEffect(() => {
-        if (registerState && !registerState.errors || (loginState && !loginState.errors && loginState.success)) {
-            hideModal();
-            router.refresh();
-
+        if (state === 'register') {
+            const regSuccess = registerState && !registerState.errors && registerState.success;
+            if (regSuccess) {
+                hideModal();
+                router.refresh();
+            }
+        } else {
+            const logSuccess = loginState && !loginState.errors && loginState.success;
+            if (logSuccess) {
+                hideModal();
+                router.refresh();
+            }
         }
-    }, [registerState, loginState])
+    }, [state, registerState, loginState])
 
     function handleLoginClick(e) {
         e.preventDefault();
@@ -75,6 +93,11 @@ export default function NavBar({ user }) {
                 </div>
                 <div className='collapse navbar-collapse' id="navbarNav">
                     <ul className={`navbar-nav ${styles.navBarItem}`}>
+                        {wholeUser?.role==="admin" &&
+                        <li className="nav-item">
+                            <Link className={`nav-link ${pathName === '/users' ? styles.linkActive : ""}`} aria-current="page" href="/users"><h3>Users</h3></Link>
+                        </li>
+                        }
                         <li className="nav-item">
                             <Link className={`nav-link ${pathName === '/home' ? styles.linkActive : ""}`} aria-current="page" href="/home"><h3>Home</h3></Link>
                         </li>
@@ -85,9 +108,10 @@ export default function NavBar({ user }) {
                             <Link className={`nav-link ${pathName === '/openings' ? styles.linkActive : ""}`} aria-current="page" href="/openings"><h3>Openings</h3></Link>
                         </li>
                         <li className="nav-item">
-                            {user ? (
+                            {userId ? (
                                 <button
                                     onClick={async () => {
+                                        setWholeUser(null)
                                         await logout();
                                         router.refresh();
                                     }}

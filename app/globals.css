@@ -28,9 +28,9 @@ body {
     background-position: center;
 
     display: flex;
-    justify-content: flex-end; /* horizontalno desno */
-    align-items: center;       /* vertikalno centar */
-    padding-right: 10%;        /* pomeri od ruba ekrana u sredinu desne strane */
+    justify-content: flex-end; 
+    align-items: center;       
+    padding-right: 10%;        
 }
 
 .hero h2 {

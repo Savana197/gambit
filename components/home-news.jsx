@@ -8,7 +8,7 @@ export default async function HomeNews() {
     const limit = 3
     const news = await getNews(limit);
     return (
-        <div className={`container my-5 p-4 ${styles.openingContainer}`} style={{ backgroundColor: "#f0f0f0", borderRadius: "10px" }}>
+        <div className={`container my-3 p-4 ${styles.openingContainer}`} style={{ backgroundColor: "#f0f0f0", borderRadius: "10px" }}>
             <div className="row mb-3">
                 <div className="col"><h2>Few of the latest posts</h2></div>
                 <div className="col d-flex justify-content-end">

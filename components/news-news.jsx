@@ -3,16 +3,19 @@ import { timeAgo } from '@/lib/utils/date';
 import classes from './news-news.module.css'
 import Link from 'next/link';
 import { verifySession } from '@/lib/auth';
+import { fetchUserWithId } from '@/lib/users';
+
 
 export default async function NewsNews() {
-    await verifySession();
+    const { userId } = await verifySession();
+    const user = await fetchUserWithId(Number(userId));
     const news = await getNews();
     return (
         <>
-            <Link className="btn btn-secondary" href="/news/post"><h3>Post news</h3></Link>
+            {(user?.role==="admin" || user?.role==="editor") && <Link className="btn btn-secondary" href="/news/post"><h3>Post news</h3></Link>}
             {news.map(item => (
                 <Link href={`/news/${item.id}`} className={classes.link} key={item.id}>
-                    <div className="card mb-3 mt-3" style={{ maxWidth: "1080px" }}  >
+                    <div className="card mb-3" style={{ maxWidth: "1080px" }}  >
                         <div className="row g-0">
 
                             <div className="col-md-4">

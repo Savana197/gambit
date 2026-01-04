@@ -1,16 +1,16 @@
 "use client"
 import React, { useRef, useState } from 'react';
-// Import Swiper React components
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
+
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 
 import styles from './swiper.module.css';
 
-// import required modules
+
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 export default function SwiperComponent({ openings }) {

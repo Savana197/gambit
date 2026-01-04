@@ -1,6 +1,5 @@
-import HomeNews from "@/components/home-news";
 import NewsNews from "@/components/news-news";
-import Link from "next/link";
+
 
 export default function NewsPage() {
     return (

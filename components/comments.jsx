@@ -1,6 +1,6 @@
 import getComments from "@/lib/comments";
 import { timeAgo } from "@/lib/utils/date";
-import CommentForm from "./comment-form";
+
 
 export default async function Comments({ postId }) {
     const comments = await getComments(postId);
