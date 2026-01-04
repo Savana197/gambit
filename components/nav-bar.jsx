@@ -11,6 +11,8 @@ export default function NavBar({ userId }) {
     const [loginState, loginAction] = useActionState(login, { message: '' })
     const [registerState, registerAction] = useActionState(register, undefined)
 
+    
+
     const [state, setState] = useState('login');
     const [wholeUser, setWholeUser] = useState(null);
     const pathName = usePathname();
@@ -59,7 +61,7 @@ export default function NavBar({ userId }) {
     }
     useEffect(() => {
         if (state === 'register') {
-            const regSuccess = registerState && !registerState.errors && registerState.success;
+            const regSuccess = registerState && !registerState.errors && registerState.success && userId;
             if (regSuccess) {
                 hideModal();
                 router.refresh();
