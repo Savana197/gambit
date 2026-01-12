@@ -33,6 +33,20 @@ export async function GET(request){
         return NextResponse.json(result.rows, {status:200})
     } catch (error) {
         console.error("Error fetching news:", error);
-        return NextResponse({message: 'Error fetching news'}, {status:500})
+        return NextResponse.json({message: 'Error fetching news'}, {status:500})
+    }
+}
+export async function DELETE(request){
+    const {searchParams} = new URL(request.url);
+    const id = Number(searchParams.get('id'));
+    if (!id) return NextResponse.json({ message: 'Missing id' }, { status: 400 });
+    const query = 'DELETE FROM "Post" WHERE id=$1 RETURNING *'
+    try {
+        const result = await pool.query(query, [id])
+        if (!result.rowCount) return NextResponse.json({ message: 'Not found' }, { status: 404 })
+        return NextResponse.json({ message: 'Deleted' }, { status: 200 })
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        return NextResponse.json({message: "Error deleting post"}, {status:500})
     }
 }
