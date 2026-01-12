@@ -4,6 +4,7 @@ import LikeButton from "@/components/like-button";
 import { getUserFromCookie, verifySession } from "@/lib/auth";
 import { getNewsById } from "@/lib/news";
 import { timeAgo } from "@/lib/utils/date";
+import Image from "next/image";
 
 export default async function NewsDetailsPage({ params }) {
     await verifySession();
@@ -16,7 +17,7 @@ export default async function NewsDetailsPage({ params }) {
         <div className="container my-5">
             <div className="row">
                 <div className="col-12 col-lg-8 card shadow-sm">
-                    <img className="card-img-top" src={post.image} alt={post.title} />
+                    <Image className="card-img-top" src={post.image} alt={post.title} />
 
                     <div className="card-body">
                         <h1 className="card-title mb-3">{post.title}</h1>

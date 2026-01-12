@@ -4,6 +4,7 @@ import classes from './news-news.module.css'
 import Link from 'next/link';
 import { verifySession } from '@/lib/auth';
 import { fetchUserWithId } from '@/lib/users';
+import Image from 'next/image';
 
 
 export default async function NewsNews() {
@@ -19,7 +20,7 @@ export default async function NewsNews() {
                         <div className="row g-0">
 
                             <div className="col-md-4">
-                                <img src={item.image} className="img-fluid rounded-start" alt={item.title} />
+                                <Image src={item.image} className="img-fluid rounded-start" alt={item.title} />
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body">

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import styles from './home-news.module.css'
 import { getNews } from '@/lib/news'
 import { timeAgo } from '@/lib/utils/date';
+import Image from 'next/image';
 
 
 export default async function HomeNews() {
@@ -24,7 +25,7 @@ export default async function HomeNews() {
                         <Link className={styles.cardLink} key={post.id} href={`/news/${post.id}`}>
                             <div className="col">
                                 <div className="card h-100">
-                                    <img src={post.image} className="card-img-top" alt={post.title} />
+                                    <Image src={post.image} className="card-img-top" alt={post.title} />
                                     <div className="card-body">
                                         <h5 className={`card-title ${styles.cardTitle}`}>{post.title}</h5>
 
