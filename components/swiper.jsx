@@ -12,7 +12,6 @@ import styles from './swiper.module.css';
 
 
 import { EffectCoverflow, Pagination } from 'swiper/modules';
-import Image from 'next/image';
 
 export default function SwiperComponent({ openings }) {
     return (
@@ -35,7 +34,7 @@ export default function SwiperComponent({ openings }) {
             >
                 {openings.map(o => (
                     <SwiperSlide className={styles.swiperSlide} key={o.src}>
-                        <Image src={o.image} />
+                        <img src={o.image} />
                         <h3>{o.title}</h3>
                     </SwiperSlide>
                 ))}

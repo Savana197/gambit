@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import classes from './opening.module.css'
 import OpeningModal from './openings-modal'
 import { getOpenings } from '@/lib/openings'
@@ -15,7 +14,7 @@ export default async function Opening() {
                     <div className="row g-0">
 
                         <div className="col-md-4">
-                            <Image src="openings/french-defense.png" className="img-fluid rounded-start" alt="french-defense" />
+                            <img src="openings/french-defense.png" className="img-fluid rounded-start" alt="french-defense" />
                         </div>
                         <div className="col-md-8">
                             <div className="card-body">
