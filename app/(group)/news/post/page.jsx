@@ -1,10 +1,20 @@
 'use client'
 import { postNews } from "@/lib/actions"
-import { useActionState } from "react"
+import { useRouter } from "next/navigation"
+import { useActionState, useEffect } from "react"
 
 
 export default function PostNews() {
+    const router = useRouter()
     const [state, formAction, pending] = useActionState(postNews, {message:null})
+    useEffect(
+    () => {
+        if(state?.message==="Successfully added post"){
+            alert(state.message)
+            router.push("/news")
+        }
+    }, [state]
+    )
     return (
         <form className="p-5" action={formAction}>
             <div className="mb-3">

@@ -8,15 +8,16 @@ export async function POST(request){
             'INSERT INTO "Opening" (title, image, description, authorid) VALUES ($1, $2, $3, $4) RETURNING *',
             [name, imageURL, description, authorid]
         );
-        return NextResponse.json(result, {status: 201});
+        return NextResponse.json(result.rows[0], {status: 201});
     } catch (error) {
+        console.error('Error creating opening:', error);
         return NextResponse.json({message: "Error creating opening"}, {status: 500});
     }
 }
 export async function GET(request){
     const {searchParams} = new URL(request.url)
     const limit = Number(searchParams.get('limit'))
-    let query = 'SELECT o.*, u.username FROM "Opening" o LEFT JOIN "User" u ON u.id=o.authorid'
+    let query = 'SELECT o.*, u.username FROM "Opening" o LEFT JOIN "User" u ON u.id=o.authorid ORDER BY o.id DESC'
     if(limit){
         query+= ` LIMIT ${limit}`
     }

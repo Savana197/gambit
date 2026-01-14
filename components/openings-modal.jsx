@@ -6,7 +6,6 @@ import { fetchUserWithId } from "@/lib/users"
 import { useActionState, useEffect, useState } from "react"
 
 export default function OpeningModal() {
-    // const router = useRouter();
     const [state, formAction] = useActionState(addOpening, { message: '', success: false })
     const [user, setUser] = useState(null)
     // useEffect(() => {
@@ -40,6 +39,7 @@ export default function OpeningModal() {
                         </div>
                         <div className="modal-body">
                             <form className="p-5" action={formAction}>
+                                <input type="hidden" value={user?.id || ""} name="authorid"/>
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">Opening name</label>
                                     <input type="text" className="form-control" id="opening" name="opening" required />
