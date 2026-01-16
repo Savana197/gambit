@@ -6,8 +6,7 @@ import { getNewsById } from "@/lib/news";
 import { timeAgo } from "@/lib/utils/date";
 
 export default async function NewsDetailsPage({ params }) {
-    await verifySession();
-    const userId = await getUserFromCookie()
+    const userId = await verifySession();
     const resolvedParams = await params;
     const { id } = resolvedParams;
     const news = await getNewsById(id);
@@ -28,15 +27,23 @@ export default async function NewsDetailsPage({ params }) {
                         <p className="card-text">
                             {post.content}
                         </p>
-                        <div className="d-flex justify-content-end">
-                            <LikeButton userId={userId} postId={id}></LikeButton>
-                        </div>
+                        {userId ?
+                            <div className="d-flex justify-content-end">
+                                <LikeButton userId={userId} postId={id}></LikeButton>
+                            </div> :
+                            null
+                        }
+
 
                     </div>
                 </div>
                 <div className="col-12 col-lg-4 d-flex flex-column gap-3">
                     <Comments postId={id}></Comments>
-                    <CommentForm postId={id}></CommentForm>
+                    {userId ?
+                    <CommentForm postId={id}></CommentForm>:
+                    <p>To comment please login</p>
+                }
+                    
                 </div>
             </div>
         </div>

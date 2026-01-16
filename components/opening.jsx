@@ -1,14 +1,20 @@
+import { verifySession } from '@/lib/auth';
 import classes from './opening.module.css'
 import OpeningModal from './openings-modal'
 import { getOpenings } from '@/lib/openings'
 
 export default async function Opening() {
     const openings = await getOpenings();
+    const userId = await verifySession();
     return (
         <div className="m-3">
+            {userId ? 
             <div className="m-3">
-                <OpeningModal></OpeningModal>
-            </div>
+                <OpeningModal userId={userId}></OpeningModal>
+            </div> :
+            null
+            }
+            
             {openings.map((o) => (
                 <div className="card m-3" style={{ maxWidth: "1080px" }} key={o.id} >
                     <div className="row g-0">

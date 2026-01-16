@@ -10,7 +10,7 @@ import DeleteNewsButton from './delete-news-button'
 
 
 export default async function NewsNews() {
-    const { userId } = await verifySession();
+    const userId = await verifySession();
     const user = await fetchUserWithId(Number(userId));
     const news = await getNews();
     const editor = user?.role === "admin" || user?.role === "editor"

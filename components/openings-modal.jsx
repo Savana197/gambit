@@ -5,28 +5,23 @@ import { fetchUserWithId } from "@/lib/users"
 
 import { useActionState, useEffect, useState } from "react"
 
-export default function OpeningModal() {
+export default function OpeningModal({userId}) {
     const [state, formAction] = useActionState(addOpening, { message: '', success: false })
     const [user, setUser] = useState(null)
-    // useEffect(() => {
-    //     if(!state.success) return;
-    //     const modalEl = document.getElementById("modal");
-    //     if (!modalEl || !window.bootstrap) return;
-    //     const modal = window.bootstrap.Modal.getInstance(modalEl)
-    //     modal.dispose()
-    //     router.refresh()
-    // },[state.success])
+
     useEffect(() => {
         async function getUser() {
-            const { userId } = await verifySession()
-            const user = await fetchUserWithId(userId)
-            setUser(user)
+            if (userId) {
+                const user = await fetchUserWithId(userId)
+                setUser(user)
+            }
+
         }
         getUser()
     }, [])
     return (
         <>
-            {user?.role==="admin" && <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal">
+            {user?.role === "admin" && <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal">
                 Add Opening
             </button>}
 
@@ -39,7 +34,7 @@ export default function OpeningModal() {
                         </div>
                         <div className="modal-body">
                             <form className="p-5" action={formAction}>
-                                <input type="hidden" value={user?.id || ""} name="authorid"/>
+                                <input type="hidden" value={user?.id || ""} name="authorid" />
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">Opening name</label>
                                     <input type="text" className="form-control" id="opening" name="opening" required />
