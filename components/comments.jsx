@@ -23,9 +23,9 @@ export default async function Comments({ postId }) {
             {comments.map(comment => (
                 <div className="card mb-3" key={comment.id}>
                     <div className="card-body">
-                        <h5 className="card-title border-bottom">{comment.username}:</h5>
+                        <h5 className="card-title border-bottom">{comment.author?.username}:</h5>
                         <p className="card-text">{comment.content}</p>
-                        <p className="card-text bt-1 border-top"><small className="text-body-secondary">Created {timeAgo(comment.createdat)}</small></p>
+                        <p className="card-text bt-1 border-top"><small className="text-body-secondary">Created {timeAgo(comment.createdAt)}</small></p>
                     </div>
                 </div>
             ))}

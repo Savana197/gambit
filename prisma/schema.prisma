@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider               = "prisma-client"
+  output                 = "../generated/prisma"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role{
+  USER
+  EDITOR
+  ADMIN
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  username  String  @unique @db.VarChar(20)
+  password  String
+  role      Role    @default(USER)
+
+  posts     Post[]
+  openings  Opening[]
+  comments  Comment[]
+  likes     Like[]
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String
+  image     String?
+  authorId  Int?
+  author    User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+
+  comments  Comment[]
+  likes     Like[]
+}
+model Opening {
+  id  Int  @id @default(autoincrement())
+  title String
+  image String?
+  description String
+  authorId Int?
+  author User?  @relation(fields: [authorId], references: [id], onDelete: SetNull)
+}
+model Comment {
+  id  Int  @id @default(autoincrement())
+  content String
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  authorId Int
+  author User  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId Int
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+model Like {
+  id  Int  @id @default(autoincrement())
+  authorId Int
+  author User  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId Int
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}

@@ -1,10 +1,10 @@
 "use client"
+import { Role } from '@/generated/prisma/enums'
 import { deletePost } from '@/lib/news'
 import React from 'react'
 
 export default function DeleteNewsButton({ id, ownerUsername, currentUser }) {
-    const isEditor = currentUser?.role === 'admin' || currentUser?.role === 'editor'
-    const canDelete = isEditor && (currentUser?.role === 'admin' || ownerUsername === currentUser?.username)
+    const canDelete = currentUser && (currentUser.role === Role.ADMIN || ownerUsername === currentUser.username)
     if (!canDelete) return null
 
     async function handleDelete() {

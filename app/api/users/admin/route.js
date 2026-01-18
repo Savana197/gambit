@@ -1,4 +1,5 @@
 
+import { Role } from "@/generated/prisma/enums";
 import pool from "@/lib/db"
 import { NextResponse } from "next/server"
 
@@ -8,10 +9,17 @@ export async function GET(request){
     // if (!user || user.role !== "admin") {
     //     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
     // }
-    const query = `SELECT id,username,email,role FROM "User" WHERE role <> 'admin'`
+    
     try {
-        const res = await pool.query(query)
-        return NextResponse.json(res.rows, {status:200})
+        const users = await prisma.user.findMany({
+            where: {
+                role: {
+                    not: "ADMIN"
+                }
+            }
+        })
+        
+        return NextResponse.json(users, {status:200})
     } catch (error) {
         console.error("GET /api/users/admin error:", error);
         return NextResponse.json(
@@ -23,8 +31,16 @@ export async function GET(request){
 export async function PATCH(request){
     const {userId, role} = await request.json();
     const query = `UPDATE "User" SET role=$1 WHERE id=$2`
+    
     try {
-        const res = await pool.query(query, [role, userId])
+        await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                role: role
+            }
+        })
         return NextResponse.json({status:200})
     } catch (error) {
         console.error("Failed to update user")

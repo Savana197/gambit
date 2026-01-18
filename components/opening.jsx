@@ -2,15 +2,18 @@ import { verifySession } from '@/lib/auth';
 import classes from './opening.module.css'
 import OpeningModal from './openings-modal'
 import { getOpenings } from '@/lib/openings'
+import { fetchUserWithId } from '@/lib/users';
+import { Role } from '@/generated/prisma/enums';
 
 export default async function Opening() {
     const openings = await getOpenings();
     const userId = await verifySession();
+    const user = await fetchUserWithId(userId)
     return (
         <div className="m-3">
-            {userId ? 
+            {user.role===Role.ADMIN ? 
             <div className="m-3">
-                <OpeningModal userId={userId}></OpeningModal>
+                <OpeningModal user={user}></OpeningModal>
             </div> :
             null
             }
@@ -26,7 +29,7 @@ export default async function Opening() {
                             <div className="card-body">
                                 <h5 className="card-title">{o.title}</h5>
                                 <p className={`card-text ${classes.truncate}`}>{o.description}</p>
-                                <p className="card-text"><small className="text-body-secondary">Created by {o.username}</small></p>
+                                <p className="card-text"><small className="text-body-secondary">Created by {o.author?.username}</small></p>
                             </div>
                         </div>
                     </div>

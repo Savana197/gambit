@@ -30,7 +30,7 @@ export default async function HomeNews() {
 
                                     </div>
                                     <div className="card-footer">
-                                        <small className="text-body-secondary">Created by {post.username} {timeAgo(post.createdat)}</small>
+                                        <small className="text-body-secondary">Created by {post.author?.username} {timeAgo(post.createdAt)}</small>
                                     </div>
                                 </div>
                             </div>

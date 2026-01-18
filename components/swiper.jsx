@@ -33,7 +33,7 @@ export default function SwiperComponent({ openings }) {
                 className={styles.swiper}
             >
                 {openings.map(o => (
-                    <SwiperSlide className={styles.swiperSlide} key={o.src}>
+                    <SwiperSlide className={styles.swiperSlide} key={o.id}>
                         <img src={o.image} />
                         <h3>{o.title}</h3>
                     </SwiperSlide>

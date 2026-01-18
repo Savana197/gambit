@@ -1,29 +1,16 @@
 'use client'
 import { addOpening } from "@/lib/actions"
-import { verifySession } from "@/lib/auth"
-import { fetchUserWithId } from "@/lib/users"
 
-import { useActionState, useEffect, useState } from "react"
+import { useActionState } from "react"
 
-export default function OpeningModal({userId}) {
+export default function OpeningModal({ user }) {
     const [state, formAction] = useActionState(addOpening, { message: '', success: false })
-    const [user, setUser] = useState(null)
 
-    useEffect(() => {
-        async function getUser() {
-            if (userId) {
-                const user = await fetchUserWithId(userId)
-                setUser(user)
-            }
-
-        }
-        getUser()
-    }, [])
     return (
         <>
-            {user?.role === "admin" && <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal">
+            <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal">
                 Add Opening
-            </button>}
+            </button>
 
             <div className="modal fade" id="modal" tabIndex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div className="modal-dialog">

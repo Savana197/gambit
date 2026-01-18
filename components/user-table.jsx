@@ -1,4 +1,5 @@
 "use client"
+import { Role } from "@/generated/prisma/enums";
 import { getUsers, patchUser } from "@/lib/users"
 import { useEffect, useState } from "react";
 
@@ -35,8 +36,8 @@ export default function UserTable() {
                                     defaultValue={user.role}
                                     onChange={e => patchUser(user.id, e.target.value)}
                                 >
-                                    <option value="user">user</option>
-                                    <option value="editor">editor</option>
+                                    <option value={Role.USER}>USER</option>
+                                    <option value={Role.EDITOR}>EDITOR</option>
                                 </select>
                             </td>
                         </tr>

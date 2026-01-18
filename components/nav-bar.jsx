@@ -5,6 +5,7 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation"
 import { useActionState, useEffect, useState } from "react";
 import { login, logout, register } from "@/lib/actions";
 import {  fetchUserWithId } from "@/lib/users";
+import { Role } from "@/generated/prisma/enums";
 
 
 export default function NavBar({ userId }) {
@@ -53,11 +54,6 @@ export default function NavBar({ userId }) {
             inst.hide();
             return;
         }
-        // modalEl.classList.remove("show");
-        // modalEl.style.display = "none";
-        // document.body.classList.remove("modal-open");
-        // const backdrops = document.querySelectorAll(".modal-backdrop");
-        // backdrops.forEach(b => b.remove());
     }
     useEffect(() => {
         if (state === 'register') {
@@ -95,7 +91,7 @@ export default function NavBar({ userId }) {
                 </div>
                 <div className='collapse navbar-collapse' id="navbarNav">
                     <ul className={`navbar-nav ${styles.navBarItem}`}>
-                        {wholeUser?.role==="admin" &&
+                        {wholeUser?.role===Role.ADMIN &&
                         <li className="nav-item">
                             <Link className={`nav-link ${pathName === '/users' ? styles.linkActive : ""}`} aria-current="page" href="/users"><h3>Users</h3></Link>
                         </li>
