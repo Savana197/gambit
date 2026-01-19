@@ -90,6 +90,7 @@ export async function GET(request) {
     const id = searchParams.get("id");
     const page = Number(searchParams.get('page')) || 1;
     const limit = Number(searchParams.get('limit')) || 3;
+    const search = searchParams.get('search') || ''
     const skip = (page - 1) * limit;
     try {
         if (id) {
@@ -109,6 +110,12 @@ export async function GET(request) {
             return NextResponse.json(post, { status: 200 });
         }
         const posts = await prisma.post.findMany({
+            where: {
+                title: {
+                    contains: search,
+                    mode: 'insensitive'
+                }
+            },
             skip: skip,
             orderBy: {
                 createdAt: "desc",

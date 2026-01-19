@@ -10,15 +10,15 @@ import { Role } from '@/generated/prisma/enums';
 
 
 
-export default async function NewsNews({ page }) {
-    
+export default async function NewsNews({ page, search = '' }) {
     const limit = 3;
     const userId = await verifySession();
     const user = await fetchUserWithId(Number(userId));
-    const news = await getNews(limit, page);
+    const news = await getNews(limit, page, search);
     const editor = user?.role === Role.ADMIN || user?.role === Role.EDITOR;
     return (
         <>
+        
             {editor && <Link className="btn btn-secondary mb-3" href="/news/post"><h3>Post news</h3></Link>}
             {news.map(item => (
                 <div key={item.id}>
