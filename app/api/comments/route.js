@@ -1,11 +1,22 @@
-import pool from "@/lib/db";
+import { verifySession } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(request){
+    const userId = await verifySession()
+    if(!userId) return NextResponse.json({message: "Unauthorized request"}, {status: 401})
+    try {
+        const user = prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+        if(!user) return NextResponse.json({message: "Unauthorized request"}, {status: 401})
+    } catch (error) {
+        return NextResponse.json({message: "Couldn't find user"}, {status: 500})
+    }
     const body = await request.json();
     const content = body?.content;
     const newsId = Number(body?.newsId)
-    const userId = Number(body?.userId)
     
     if (!content || !newsId || !userId) {
         return NextResponse.json({ message: 'Missing required fields' }, { status: 400 })

@@ -1,11 +1,27 @@
 
+import { verifySession } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
+    const userId = await verifySession();
+    if (!userId) {
+        return NextResponse.json({ message: "Unauthorized request" }, { status: 401 })
+    }
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+        if (!user) {
+            return NextResponse.json({ message: "Unauthorized request" }, { status: 401 })
+        }
+    } catch (error) {
+        return NextResponse.json({ message: "Server error" }, { status: 500 })
+    }
     const data = await request.json();
     const postId = Number(data.postId)
-    const userId = Number(data.userId)
-    if (!postId || !userId) return NextResponse.json("Missing fields", { status: 400 });
+    if (!postId) return NextResponse.json("Missing fields", { status: 400 });
     try {
         const exists = await prisma.like.findFirst({
             where:

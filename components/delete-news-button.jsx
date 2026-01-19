@@ -11,8 +11,8 @@ export default function DeleteNewsButton({ id, ownerUsername, currentUser }) {
         const confirmed = window.confirm('Are you sure you want to delete this post?')
         if (!confirmed) return
         try {
-            await deletePost(id)
-            alert("Post deleted successfully")
+            const result = await deletePost(id)
+            alert(result.message)
             window.location.reload()
         } catch (err) {
             console.error(err)

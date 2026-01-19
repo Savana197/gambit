@@ -22,7 +22,6 @@ export default function LikeButton({ postId, userId }) {
             alert("You must be logged in to like this post!");
             return;
         }
-
         setLoading(true);
 
         try {
@@ -31,7 +30,8 @@ export default function LikeButton({ postId, userId }) {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ postId, userId }),
+                credentials: "include",
+                body: JSON.stringify({ postId }),
             });
 
             if (!res.ok) throw new Error("Failed to like");

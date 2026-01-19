@@ -1,15 +1,25 @@
 
 import { Role } from "@/generated/prisma/enums";
-import pool from "@/lib/db"
+import { verifySession } from "@/lib/auth";
 import { NextResponse } from "next/server"
 
 export async function GET(request){
-    // const user = await getUserFromCookie();
-    
-    // if (!user || user.role !== "admin") {
-    //     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
-    // }
-    
+    const userId = await verifySession()
+    if(!userId){
+        return NextResponse.json({message: "Unauthorized request"}, {status: 401})
+    }
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+        if(!user || user.role!=Role.ADMIN){
+            return NextResponse.json({message: "Forbidden request"}, {status: 403})
+        }
+    } catch (error) {
+        return NextResponse.json({message: "Server error"}, {status: 500})
+    }
     try {
         const users = await prisma.user.findMany({
             where: {
@@ -29,9 +39,23 @@ export async function GET(request){
     }
 }
 export async function PATCH(request){
+    const id = await verifySession()
+    if(!id){
+        return NextResponse.json({message: "Unauthorized request"}, {status: 401})
+    }
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        })
+        if(!user || user.role!=Role.ADMIN){
+            return NextResponse.json({message: "Forbidden request"}, {status: 403})
+        }
+    } catch (error) {
+        return NextResponse.json({message: "Server error"}, {status: 500})
+    }
     const {userId, role} = await request.json();
-    const query = `UPDATE "User" SET role=$1 WHERE id=$2`
-    
     try {
         await prisma.user.update({
             where: {

@@ -1,11 +1,15 @@
 'use client'
 import { addOpening } from "@/lib/actions"
 
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 
 export default function OpeningModal({ user }) {
     const [state, formAction] = useActionState(addOpening, { message: '', success: false })
-
+    useEffect(()=>{
+        if(state?.success){
+            alert(state.message)
+        }
+    },[state])
     return (
         <>
             <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal">
@@ -21,7 +25,6 @@ export default function OpeningModal({ user }) {
                         </div>
                         <div className="modal-body">
                             <form className="p-5" action={formAction}>
-                                <input type="hidden" value={user?.id || ""} name="authorid" />
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">Opening name</label>
                                     <input type="text" className="form-control" id="opening" name="opening" required />
