@@ -1,0 +1,31 @@
+.pagination {
+    display: flex;
+    gap: 8px; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pageItem {
+    
+}
+
+.pageLink {
+    color: #6c757d; 
+    background-color: transparent;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.pageLink:hover {
+    color: #343a40;
+}
+
+.active {
+    color: #495057; 
+    font-weight: bold;
+}

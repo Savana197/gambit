@@ -88,7 +88,9 @@ export async function PATCH(request) {
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const limit = searchParams.get("limit");
+    const page = Number(searchParams.get('page')) || 1;
+    const limit = Number(searchParams.get('limit')) || 3;
+    const skip = (page - 1) * limit;
     try {
         if (id) {
             const post = await prisma.post.findUnique({
@@ -107,10 +109,11 @@ export async function GET(request) {
             return NextResponse.json(post, { status: 200 });
         }
         const posts = await prisma.post.findMany({
+            skip: skip,
             orderBy: {
                 createdAt: "desc",
             },
-            take: limit ? Number(limit) : undefined,
+            take: limit,
             include: {
                 author: {
                     select: {
