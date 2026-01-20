@@ -4,24 +4,14 @@ import classes from './pagination.module.css';
 import { countPosts } from '@/lib/news';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import useCountPages from './use-count-pages';
 
 export default function Pagination() {
     const limit = 3
-    const [pageNumber, setPageNumber] = useState(0)
+    const {pageNumber} = useCountPages(limit)
     const searchParams = useSearchParams();
     const currentPage = Number(searchParams.get('page')) || 1;
-
-    useEffect(() => {
-        async function countNews() {
-            const posts = await countPosts()
-            const totalPages = Math.ceil(posts / limit)
-            setPageNumber(totalPages)
-        }
-        countNews()
-    }, [])
-
-
-
+    
     return (
         <nav aria-label="Page navigation example">
             <ul className={classes.pagination}>

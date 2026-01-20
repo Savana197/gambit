@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 
 export default function LikeButton({ postId, userId }) {
-    const [liked, setLiked] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [liked, setLiked] = useState(false);
     const [count, setCount] = useState(0)
 
     useEffect(() => {
