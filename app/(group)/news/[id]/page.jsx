@@ -14,7 +14,7 @@ export default async function NewsDetailsPage({ params }) {
     const { id } = resolvedParams;
     const news = await getNewsById(id);
     const user = await fetchUserWithId(userId)
-    const canEdit = user.role === Role.ADMIN || user.username === news.author?.username
+    const canEdit = user?.role === Role.ADMIN || user?.username === news?.author?.username
     
     
     return (

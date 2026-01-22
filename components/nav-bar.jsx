@@ -12,8 +12,6 @@ export default function NavBar({ userId }) {
     const [loginState, loginAction] = useActionState(login, { message: '' })
     const [registerState, registerAction] = useActionState(register, undefined)
 
-    
-
     const [state, setState] = useState('login');
     const [wholeUser, setWholeUser] = useState(null);
     const pathName = usePathname();
@@ -145,7 +143,11 @@ export default function NavBar({ userId }) {
                         </div>
                         <div className="modal-body">
                             <form id="form" action={state === "login" ? loginAction : registerAction}>
-
+                                {state === "login" ?
+                                loginState?.errors?.server && loginState.errors.server
+                            :
+                                registerState?.errors?.server && registerState.errors.server
+                            }
 
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Email</label>

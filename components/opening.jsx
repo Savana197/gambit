@@ -11,7 +11,7 @@ export default async function Opening() {
     const user = await fetchUserWithId(userId)
     return (
         <div className="m-3">
-            {user.role===Role.ADMIN ? 
+            {user?.role===Role.ADMIN ? 
             <div className="m-3">
                 <OpeningModal user={user}></OpeningModal>
             </div> :

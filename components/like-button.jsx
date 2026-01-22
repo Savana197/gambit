@@ -34,7 +34,7 @@ export default function LikeButton({ postId, userId }) {
                 body: JSON.stringify({ postId }),
             });
 
-            if (!res.ok) throw new Error("Failed to like");
+            if (!res.ok) throw new Error("Failed to like/unlike");
 
             setLiked((prev) => !prev);
             setCount(liked ? count - 1 : count + 1);
